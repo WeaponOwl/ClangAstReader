@@ -212,6 +212,7 @@ namespace ClangReader
                 case "<<<NULL>>>":
                 case "Overrides:":
                 case "...":
+                case "array":
                     break;
                 case "original":
                     token.name = name + parameters[0];
@@ -299,12 +300,6 @@ namespace ClangReader
                 token.properties = token.properties.Where((value, index) => index < token.properties.Length - 1).ToArray();
             }
 
-            if (token.properties.Length > 0 && token.properties[token.properties.Length - 1] == "static")
-            {
-                token.attributes = token.attributes.Concat(new string[] { token.properties[token.properties.Length - 1] }).ToArray();
-                token.properties = token.properties.Where((value, index) => index < token.properties.Length - 1).ToArray();
-            }
-
             if (token.properties.Length > 0 && token.properties[token.properties.Length - 1] == "extern")
             {
                 token.attributes = token.attributes.Concat(new string[] { token.properties[token.properties.Length - 1] }).ToArray();
@@ -317,7 +312,19 @@ namespace ClangReader
                 token.properties = token.properties.Where((value, index) => index < token.properties.Length - 1).ToArray();
             }
 
+            if (token.properties.Length > 0 && token.properties[token.properties.Length - 1] == "static")
+            {
+                token.attributes = token.attributes.Concat(new string[] { token.properties[token.properties.Length - 1] }).ToArray();
+                token.properties = token.properties.Where((value, index) => index < token.properties.Length - 1).ToArray();
+            }
+
             if (token.properties.Length > 0 && token.properties[token.properties.Length - 1] == "definition")
+            {
+                token.attributes = token.attributes.Concat(new string[] { token.properties[token.properties.Length - 1] }).ToArray();
+                token.properties = token.properties.Where((value, index) => index < token.properties.Length - 1).ToArray();
+            }
+
+            if (token.properties.Length > 0 && token.properties[token.properties.Length - 1] == "nrvo")
             {
                 token.attributes = token.attributes.Concat(new string[] { token.properties[token.properties.Length - 1] }).ToArray();
                 token.properties = token.properties.Where((value, index) => index < token.properties.Length - 1).ToArray();

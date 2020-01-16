@@ -59,6 +59,7 @@ namespace ClangReader.Types
 
         public List<Property> properties = new List<Property>();
         public List<StructureDeclaration> subStructures = new List<StructureDeclaration>();
+        public List<string> others = new List<string>();
     }
 
     class EnumDeclaration
